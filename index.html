@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 17th Birthday Siddhavi! 💜💖</title>
+    <title>For My Dearest Gubbu 🐼💜</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-grad: linear-gradient(135deg, #120418 0%, #1f0824 50%, #0d0212 100%);
+            --bg-grad: linear-gradient(135deg, #120418 0%, #200829 50%, #0d0212 100%);
             --glass-bg: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 138, 201, 0.15);
             --pink-accent: #ff60b3;
@@ -30,8 +30,30 @@
         .hidden { display: none !important; }
         .text-center { text-align: center; }
 
-        /* PASSWORD SCREEN */
-        #password-screen {
+        /* BLURRED FLOATING HEARTS BACKGROUND */
+        .hearts-bg {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 107, 161, 0.35);
+            filter: blur(4px);
+            animation: riseHeart 7s linear infinite;
+        }
+        @keyframes riseHeart {
+            0% { transform: translateY(105vh) scale(0.6) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.4) rotate(360deg); opacity: 0; }
+        }
+
+        /* SCREENS (Password & Intro Blast) */
+        .screen {
             position: fixed;
             inset: 0;
             background: radial-gradient(circle at center, #2e0836 0%, #110216 100%);
@@ -42,7 +64,7 @@
             padding: 20px;
             transition: opacity 0.6s ease;
         }
-        #password-screen.fade-out { opacity: 0; pointer-events: none; }
+        .screen.fade-out { opacity: 0; pointer-events: none; }
 
         .glass-card {
             background: var(--glass-bg);
@@ -50,9 +72,11 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 20px 50px rgba(131, 24, 138, 0.2);
             border-radius: 24px;
-            padding: 36px;
-            max-width: 440px;
+            padding: 30px;
+            max-width: 480px;
             width: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         .input-group {
@@ -87,12 +111,62 @@
         .glow-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 96, 179, 0.6); }
         .error-msg { color: #ffa3cb; margin-top: 12px; font-size: 0.9rem; font-weight: 600; }
 
-        /* MAIN CONTAINER */
-        .container { max-width: 1000px; margin: 0 auto; padding: 24px; position: relative; z-index: 2; }
-        .section { margin: 50px 0; }
+        /* FADE IN OUT INTRO SCREEN & POPPER BLAST */
+        .intro-container {
+            text-align: center;
+        }
+        .fade-text {
+            font-size: 1.8rem;
+            color: var(--pink-accent);
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .fade-text.show { opacity: 1; }
 
-        /* HERO CARD */
-        .hero-card { text-align: center; padding: 40px 20px; }
+        .popper-blast-title {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #ff8fe1, #c77dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            margin-bottom: 20px;
+            transform: scale(0.8);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popIn {
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* MAIN CONTAINER */
+        .container { max-width: 980px; margin: 0 auto; padding: 20px; position: relative; z-index: 2; }
+        .section { margin: 40px 0; }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(18, 4, 24, 0.75);
+            backdrop-filter: blur(14px);
+            padding: 14px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+        }
+        .nav-logo { font-weight: 800; color: var(--pink-accent); font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 16px; list-style: none; margin: 0; padding: 0; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--pink-accent); }
+
+        /* HERO */
+        .hero-section { text-align: center; padding: 20px 0; }
         .badge-17 {
             display: inline-block;
             background: rgba(255, 96, 179, 0.15);
@@ -103,28 +177,22 @@
             font-size: 0.95rem;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 96, 179, 0.4);
-            animation: pulseGlow 2.5s infinite;
-        }
-        @keyframes pulseGlow {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,96,179,0.4); }
-            70% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(255,96,179,0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,96,179,0); }
         }
 
-        /* COUNTER BOXES */
-        .counter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
-        .counter-box { background: rgba(0,0,0,0.3); padding: 16px; border-radius: 16px; border: 1px solid var(--glass-border); text-align: center; }
-        .counter-box span { display: block; font-size: 1.8rem; font-weight: 800; color: #fff; }
-        .counter-box p { margin: 6px 0 0; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        /* COUNTER */
+        .counter-container { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        .counter-box { background: rgba(0,0,0,0.4); padding: 14px; border-radius: 14px; flex: 1; max-width: 95px; text-align: center; border: 1px solid var(--glass-border); }
+        .counter-box span { display: block; font-size: 1.5rem; font-weight: 800; color: #fff; }
+        .counter-box p { margin: 4px 0 0; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
 
-        /* GALLERY SECTION */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 20px; }
-        .photo { position: relative; border-radius: 18px; overflow: hidden; background: #0c0210; border: 1px solid var(--glass-border); }
-        .photo img, .photo video { width: 100%; height: 170px; object-fit: cover; display: block; cursor: pointer; transition: transform 0.3s ease; }
-        .photo img:hover, .photo video:hover { transform: scale(1.06); }
-        .caption { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 10px; background: rgba(0,0,0,0.4); }
+        /* GALLERY GRID */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 16px; }
+        .photo { position: relative; border-radius: 16px; overflow: hidden; background: #0c0210; border: 1px solid var(--glass-border); }
+        .photo img, .photo video { width: 100%; height: 160px; object-fit: cover; display: block; cursor: pointer; transition: transform 0.3s ease; }
+        .photo img:hover, .photo video:hover { transform: scale(1.05); }
+        .caption { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 8px; background: rgba(0,0,0,0.4); }
 
-        /* EMOJI EXPLOSION CONTAINER */
+        /* EMOJI EXPLOSION OVERLAY */
         #emoji-overlay {
             pointer-events: none;
             position: fixed;
@@ -139,18 +207,28 @@
             user-select: none;
         }
         @keyframes floatUpAndExplode {
-            0% {
-                transform: translate(var(--start-x), 100vh) scale(0.4) rotate(0deg);
-                opacity: 0;
-            }
+            0% { transform: translate(var(--start-x), 100vh) scale(0.4) rotate(0deg); opacity: 0; }
             20% { opacity: 1; }
-            100% {
-                transform: translate(var(--end-x), -20vh) scale(1.8) rotate(360deg);
-                opacity: 0;
-            }
+            100% { transform: translate(var(--end-x), -20vh) scale(1.8) rotate(360deg); opacity: 0; }
         }
 
-        .action-box { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
+        .action-box { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+
+        /* OPEN WHEN ENVELOPES */
+        .open-when-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 15px; }
+        .envelope { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 14px; text-align: center; cursor: pointer; transition: transform 0.2s, background 0.2s; border: 1px solid var(--glass-border); }
+        .envelope:hover { transform: translateY(-4px); background: rgba(255,96,179,0.1); }
+        .envelope i { font-size: 2rem; color: var(--pink-accent); margin-bottom: 8px; display: block; }
+        .envelope h3 { font-size: 0.95rem; margin: 0; color: #fff; }
+
+        /* 100 REASONS SECTION */
+        .reasons-scroll-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; max-height: 400px; overflow-y: auto; padding-right: 8px; margin-top: 15px; }
+        .reason-chip { background: rgba(0,0,0,0.35); padding: 12px 16px; border-radius: 12px; border: 1px solid var(--glass-border); font-size: 0.9rem; color: var(--text-main); }
+
+        /* MODALS */
+        .modal { position: fixed; inset: 0; background: rgba(5, 1, 8, 0.88); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-content { position: relative; max-width: 450px; width: 100%; text-align: center; }
+        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; }
 
         /* LIGHTBOX POPUP */
         #popup { display: none; position: fixed; inset: 0; background: rgba(5, 1, 8, 0.95); align-items: center; justify-content: center; z-index: 9998; padding: 20px; }
@@ -158,126 +236,170 @@
         #popup img, #popup video { max-width: 90vw; max-height: 90vh; border-radius: 16px; object-fit: contain; }
         .popup-close { position: absolute; top: 20px; right: 26px; color: #fff; font-size: 36px; cursor: pointer; }
 
-        /* MUSIC CONTROLS */
-        .music-float { position: fixed; right: 20px; bottom: 20px; z-index: 1000; display: flex; gap: 10px; align-items: center; }
-        
-        @media(max-width: 600px) {
-            .counter-grid { grid-template-columns: repeat(2, 1fr); }
+        .music-float { position: fixed; right: 20px; bottom: 20px; z-index: 1000; }
+
+        @media(max-width: 768px) {
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- BLURRED FLOATING HEARTS BACKGROUND -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- EMOJI EXPLOSION OVERLAY -->
     <div id="emoji-overlay"></div>
 
-    <!-- PASSWORD SCREEN -->
-    <section id="password-screen">
+    <!-- 1. PASSWORD SCREEN -->
+    <section id="password-screen" class="screen">
         <div class="glass-card text-center">
-            <h2 style="color: var(--pink-accent); margin-top:0;">Only Babde Can Enter 💜</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Enter our special passcode date (DDMMYY)</p>
+            <h2 style="color: var(--pink-accent); margin-top:0;">Only Babde Can Enter ❤️</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Enter our special anniversary date (DDMMYY)</p>
             <div class="input-group">
                 <input type="password" id="password-input" placeholder="e.g. 021024" autofocus maxlength="6">
-                <button id="password-btn" class="glow-btn"><i class="fas fa-heart"></i> Open</button>
+                <button id="password-btn" class="glow-btn"><i class="fas fa-heart"></i> Enter</button>
             </div>
             <p id="password-error" class="error-msg"></p>
         </div>
     </section>
 
+    <!-- 2. FADE IN & OUT INTRO SCREEN WITH POPPER BLAST -->
+    <section id="intro-screen" class="screen hidden">
+        <div class="glass-card intro-container">
+            <div id="intro-text-box" class="fade-text">Today is a very special day</div>
+            <button id="skip-intro-btn" class="glow-btn hidden" style="margin-top:20px;">Enter Our World ✨</button>
+        </div>
+    </section>
+
     <!-- MAIN WEBSITE CONTENT -->
     <main id="main-content" class="container hidden">
+        
+        <nav class="navbar">
+            <div class="nav-logo">Gubbu 💜 Panda</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#counter-section">Us</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#open-when">Comfort</a></li>
+                <li><a href="#interactive-actions">Love</a></li>
+                <li><a href="#code-100">100 Reasons</a></li>
+            </ul>
+        </nav>
 
-        <!-- HERO SECTION -->
-        <section class="section hero-card glass-card" style="max-width:100%;">
-            <div class="badge-17">🎂 Happy 17th Birthday, My Love! ✨</div>
-            <h1 style="font-size: 2.3rem; margin: 10px 0; background: linear-gradient(135deg, #ff8fe1, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                To My Dearest Siddhavi (Gubbu) 💜
-            </h1>
-            <p style="color: var(--text-muted); max-width: 650px; margin: 15px auto; line-height: 1.6;">
-                Today you turn 17, and my infinite love for you inspired this glowing pink and purple universe. Thank you for being my entire world, my babde, and my forever promise.
-            </p>
-        </section>
-
-        <!-- DAYS TOGETHER COUNTER -->
-        <section class="section glass-card text-center" style="max-width:100%;">
-            <h2 style="margin-top:0;">We Have Been Together For...</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Since October 3, 2024 ✨</p>
-            <div class="counter-grid">
-                <div class="counter-box"><span id="days">00</span><p>Days</p></div>
-                <div class="counter-box"><span id="hours">00</span><p>Hours</p></div>
-                <div class="counter-box"><span id="minutes">00</span><p>Minutes</p></div>
-                <div class="counter-box"><span id="seconds">00</span><p>Seconds</p></div>
+        <!-- HERO -->
+        <section id="hero" class="section hero-section">
+            <div class="glass-card text-center" style="max-width:100%;">
+                <div class="badge-17">🎂 Happy 17th Birthday, My Love! ✨</div>
+                <h1 style="margin:10px 0; font-size:2rem; background: linear-gradient(135deg, #ff8fe1, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    To My Dearest Gubbu 🐼💜
+                </h1>
+                <p style="color:var(--text-muted); max-width:650px; margin:10px auto; line-height:1.5;">
+                    I called you Gubbu because my infinite love turned you into the cutest panda in the universe. Today you turn 17, and this is our safe space.
+                </p>
             </div>
         </section>
 
-        <!-- INTERACTIVE KISS & HUG EXPLOSION BUTTONS -->
-        <section class="section glass-card text-center" style="max-width:100%;">
-            <h2 style="margin-top:0;">Need Love Right Now? 💋🫂</h2>
-            <p style="color: var(--text-muted);">Tap below to flood your screen with virtual affection!</p>
-            <div class="action-box">
-                <button class="glow-btn" onclick="triggerAffection('kiss')"><i class="fas fa-kiss-wink-heart"></i> Send a Kiss 💋</button>
-                <button class="glow-btn" onclick="triggerAffection('hug')" style="background: linear-gradient(135deg, #a855f7, #ec4899);"><i class="fas fa-hands-holding-heart"></i> Send a Hug 🫂</button>
-            </div>
-        </section>
-
-        <!-- PHOTO & VIDEO GALLERY -->
-        <section class="section glass-card" style="max-width:100%;">
-            <h2 style="margin:0 0 6px 0">Our Gallery 📸</h2>
-            <p style="margin:0 0 20px 0; color: var(--text-muted); font-size: 0.95rem;">
-                Our relationship is a forever promise. Here are our favorite moments captured together.
-            </p>
-
-            <div class="gallery">
-                <!-- Images -->
-                <div class="photo"><img loading="lazy" src="images/Snapchat-344609506.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-162159466.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-873593879.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-527620421.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-2142615637.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">Date unknown</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1175841972.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-15-12-28-39-30_a63b0f8076346d26cbdc1b971a1da2a7.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-75909800.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-432316162.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1061100202.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1994609448.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-778282584.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1019783900.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-344543242.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1445988979.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">07/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1901899807.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">07/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Snapchat-1401782366.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">07/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-04-20-15-48-17_a63b0f8076346d26cbdc1b971a1da2a7.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-09-04-58-32-87_a63b0f8076346d26cbdc1b971a1da2a7.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
-                <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-20-06-02-30-92_92460851df6f172a4592fca41cc2d2e6.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">20/11/2025</div></div>
-
-                <!-- Videos -->
-                <div class="photo">
-                    <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.44.38.mp4" onclick="openPopup(this.src,'video')"></video>
-                    <div class="caption">20/11/2025 (Video)</div>
-                </div>
-                <div class="photo">
-                    <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.44.40.mp4" onclick="openPopup(this.src,'video')"></video>
-                    <div class="caption">15/11/2025 (Video)</div>
-                </div>
-                <div class="photo">
-                    <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.45.23.mp4" onclick="openPopup(this.src,'video')"></video>
-                    <div class="caption">15/11/2025 (Video)</div>
-                </div>
-                <div class="photo">
-                    <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.45.23 .mp4" onclick="openPopup(this.src,'video')"></video>
-                    <div class="caption">25/11/2025 (Video)</div>
+        <!-- COUNTER -->
+        <section id="counter-section" class="section">
+            <div class="glass-card text-center" style="max-width:100%;">
+                <h2 style="margin-top:0;">We Have Been Together For...</h2>
+                <p style="color:var(--text-muted); font-size:0.95rem;">Since October 2, 2024 ✨</p>
+                <div class="counter-container">
+                    <div class="counter-box"><span id="days">00</span><p>Days</p></div>
+                    <div class="counter-box"><span id="hours">00</span><p>Hours</p></div>
+                    <div class="counter-box"><span id="minutes">00</span><p>Minutes</p></div>
+                    <div class="counter-box"><span id="seconds">00</span><p>Seconds</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- LOVE NOTE SECTION -->
-        <section class="section glass-card text-center" style="max-width:100%;">
-            <h2 style="margin-top:0;">A Love Note For My Shone 💌</h2>
-            <p style="color: var(--text-muted); line-height: 1.7; max-width: 700px; margin: 0 auto;">
-                To my shone, my babde, my babu — You are my smile every morning and my comfort every night. Thank you for your love, your patience, your wonderful laugh, and for being my person as you turn 17 today. I promise to stay by your side forever. Always yours — <strong>Sonu</strong>. 💖
-            </p>
+        <!-- INTERACTIVE HUG AND KISS BUTTONS -->
+        <section id="interactive-actions" class="section">
+            <div class="glass-card text-center" style="max-width:100%;">
+                <h2 style="margin-top:0;">Need Love Right Now? 💋🫂</h2>
+                <p style="color: var(--text-muted);">Tap below to flood your screen with virtual affection!</p>
+                <div class="action-box">
+                    <button class="glow-btn" onclick="triggerAffection('kiss')"><i class="fas fa-kiss-wink-heart"></i> Send a Kiss 💋</button>
+                    <button class="glow-btn" onclick="triggerAffection('hug')" style="background: linear-gradient(135deg, #a855f7, #ec4899);"><i class="fas fa-hands-holding-heart"></i> Send a Hug 🫂</button>
+                </div>
+            </div>
         </section>
 
-        <footer class="text-center" style="margin: 50px 0; color: var(--text-muted); font-size: 0.9rem;">
+        <!-- GALLERY -->
+        <section id="gallery" class="section">
+            <div class="glass-card" style="max-width:100%;">
+                <h2 style="margin:0 0 6px 0">Our Gallery 📸</h2>
+                <p style="margin:0 0 16px 0; color:var(--text-muted); font-size:0.95rem;">
+                    Our relationship is a forever promise. Here are our best moments.
+                </p>
+
+                <div class="gallery">
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-344609506.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-162159466.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-873593879.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-527620421.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-2142615637.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">Date unknown</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1175841972.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-15-12-28-39-30_a63b0f8076346d26cbdc1b971a1da2a7.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-75909800.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-432316162.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">15/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1061100202.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1994609448.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-778282584.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1019783900.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-344543242.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1445988979.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">07/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1901899807.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">07/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Snapchat-1401782366.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">07/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-04-20-15-48-17_a63b0f8076346d26cbdc1b971a1da2a7.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">04/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-09-04-58-32-87_a63b0f8076346d26cbdc1b971a1da2a7.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">09/11/2025</div></div>
+                    <div class="photo"><img loading="lazy" src="images/Screenshot_2025-11-20-06-02-30-92_92460851df6f172a4592fca41cc2d2e6.jpg" alt="Memory" onclick="openPopup(this.src,'image')"><div class="caption">20/11/2025</div></div>
+
+                    <!-- Videos -->
+                    <div class="photo">
+                        <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.44.38.mp4" onclick="openPopup(this.src,'video')"></video>
+                        <div class="caption">20/11/2025 (Video)</div>
+                    </div>
+                    <div class="photo">
+                        <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.44.40.mp4" onclick="openPopup(this.src,'video')"></video>
+                        <div class="caption">15/11/2025 (Video)</div>
+                    </div>
+                    <div class="photo">
+                        <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.45.23.mp4" onclick="openPopup(this.src,'video')"></video>
+                        <div class="caption">15/11/2025 (Video)</div>
+                    </div>
+                    <div class="photo">
+                        <video loading="lazy" muted playsinline src="video/WhatsApp Video 2025-11-21 at 06.45.23 .mp4" onclick="openPopup(this.src,'video')"></video>
+                        <div class="caption">25/11/2025 (Video)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPEN WHEN ENVELOPES -->
+        <section id="open-when" class="section">
+            <div class="glass-card" style="max-width:100%;">
+                <h2 class="text-center" style="margin-top:0;">Open When You Need Me ✉️</h2>
+                <div class="open-when-grid">
+                    <div class="envelope" onclick="openEnvelope('sad')"><i class="fas fa-cloud-showers-heavy"></i><h3>you feel sad</h3></div>
+                    <div class="envelope" onclick="openEnvelope('alone')"><i class="fas fa-user-friends"></i><h3>you feel alone</h3></div>
+                    <div class="envelope" onclick="openEnvelope('miss')"><i class="fas fa-paper-plane"></i><h3>you miss me</h3></div>
+                    <div class="envelope" onclick="openEnvelope('smile')"><i class="fas fa-laugh-beam"></i><h3>need a smile</h3></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CODE 100 REASONS -->
+        <section id="code-100" class="section">
+            <div class="glass-card" style="max-width:100%;">
+                <h2 class="text-center" style="margin-top:0;">100 Reasons Why You Are Amazing 📝</h2>
+                <p class="text-center" style="color:var(--text-muted); font-size:0.9rem;">Scroll through a tiny portion of the endless reasons why you completely own my heart.</p>
+                <div id="reasons-container" class="reasons-scroll-grid"></div>
+            </div>
+        </section>
+
+        <footer class="text-center" style="margin: 40px 0; color: var(--text-muted); font-size: 0.9rem;">
             <p>I hope we really get married and live happily. Built with endless love for Siddhavi ❤️</p>
         </footer>
 
@@ -290,20 +412,38 @@
         <video id="popupVideo" controls class="hidden"></video>
     </div>
 
-    <!-- BACKGROUND MUSIC (Happy Birthday Instrumental + Fallback) -->
+    <!-- ENVELOPE MODAL -->
+    <div id="envelope-modal" class="modal hidden">
+        <div class="glass-card modal-content text-center">
+            <span class="close-modal" onclick="closeEnvelope()">&times;</span>
+            <i class="fas fa-envelope-open-text" style="font-size:2.5rem; color:var(--pink-accent); margin-bottom:15px;"></i>
+            <div id="modal-text" style="line-height:1.6; color:#e6eef8;"></div>
+        </div>
+    </div>
+
+    <!-- BACKGROUND MUSIC (Happy Birthday Instrumental) -->
     <audio id="bgMusic" loop preload="auto">
-        <!-- Built-in reliable royalty-free Happy Birthday music instrumental link -->
         <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-jazz-version-120516.mp3" type="audio/mpeg">
-        <!-- Fallback to your local music.mp3 if you uploaded one -->
         <source src="music.mp3" type="audio/mpeg">
     </audio>
-
     <div class="music-float">
-        <button id="musicToggle" class="glow-btn" style="padding:10px 18px; font-size:0.85rem;">🎵 Play Birthday Music</button>
+        <button id="musicToggle" class="glow-btn" style="padding:10px 16px; font-size:0.85rem;">🎵 Play Birthday Music</button>
     </div>
 
     <script>
-        // --- 1. PASSWORD CHECKER (021024) ---
+        // --- 1. BLURRED FLOATING HEARTS GENERATOR ---
+        const heartsBg = document.getElementById('heartsBg');
+        for(let i=0; i<18; i++) {
+            const h = document.createElement('div');
+            h.className = 'bg-heart';
+            h.innerText = '💜';
+            h.style.left = (Math.random() * 95) + 'vw';
+            h.style.animationDuration = (6 + Math.random() * 5) + 's';
+            h.style.animationDelay = (Math.random() * -6) + 's';
+            heartsBg.appendChild(h);
+        }
+
+        // --- 2. PASSWORD CHECKER (021024) ---
         const correctPassword = "021024";
 
         document.getElementById('password-btn').addEventListener('click', verifyPassword);
@@ -318,14 +458,48 @@
                 screen.classList.add('fade-out');
                 setTimeout(() => {
                     screen.style.display = 'none';
-                    document.getElementById('main-content').classList.remove('hidden');
+                    startIntroAnimation();
                 }, 600);
             } else {
                 document.getElementById('password-error').innerText = "Incorrect code, Babde! Try our date (021024) ❤️";
             }
         }
 
-        // --- 2. AUTO-PLAY MUSIC ON FIRST CLICK ANYWHERE ---
+        // --- 3. FADE IN OUT INTRO & POPPER BLAST ---
+        function startIntroAnimation() {
+            const introScreen = document.getElementById('intro-screen');
+            introScreen.classList.remove('hidden');
+            
+            const textBox = document.getElementById('intro-text-box');
+            const skipBtn = document.getElementById('skip-intro-btn');
+
+            // Step 1: Fade in "Today is a very special day"
+            setTimeout(() => {
+                textBox.classList.add('show');
+            }, 300);
+
+            // Step 2: Fade out, then trigger Popper Blast with "Mazha Bayko Cha Birthday Aahe"
+            setTimeout(() => {
+                textBox.classList.remove('show');
+                setTimeout(() => {
+                    textBox.className = "popper-blast-title";
+                    textBox.innerText = "🎉 Mazha Bayko Cha Birthday Aahe! 🎂";
+                    textBox.style.opacity = 1;
+                    triggerAffection('kiss'); // Trigger celebratory emoji blast
+                    skipBtn.classList.remove('hidden');
+                }, 1000);
+            }, 3500);
+
+            skipBtn.addEventListener('click', () => {
+                introScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    document.getElementById('main-content').classList.remove('hidden');
+                }, 600);
+            });
+        }
+
+        // --- 4. AUTO-PLAY MUSIC ON FIRST CLICK ---
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         let isPlaying = false;
@@ -355,8 +529,8 @@
             }
         });
 
-        // --- 3. DAYS TOGETHER COUNTER ---
-        const startDate = new Date('2024-10-03T00:00:00');
+        // --- 5. DAYS TOGETHER COUNTER ---
+        const startDate = new Date('2024-10-02T00:00:00');
         function updateCounter() {
             const now = new Date();
             const diff = now - startDate;
@@ -368,10 +542,10 @@
         setInterval(updateCounter, 1000);
         updateCounter();
 
-        // --- 4. EMOJI FLOOD & EXPLOSION ANIMATION ---
+        // --- 6. EMOJI FLOOD & EXPLOSION ANIMATION ---
         function triggerAffection(type) {
             const overlay = document.getElementById('emoji-overlay');
-            const emojis = type === 'kiss' ? ['💋', '😘', '💜', '💖', '👩‍❤️‍💋‍👨'] : ['🫂', '🤍', '🐼', '💜', '🤗'];
+            const emojis = type === 'kiss' ? ['💋', '😘', '💜', '💖', '🎉'] : ['🫂', '🤍', '🐼', '💜', '🎂'];
             
             for (let i = 0; i < 35; i++) {
                 const el = document.createElement('div');
@@ -388,14 +562,35 @@
                 el.style.animationDuration = (1.2 + Math.random() * 1.2) + 's';
                 
                 overlay.appendChild(el);
-                
-                setTimeout(() => {
-                    el.remove();
-                }, 2000);
+                setTimeout(() => el.remove(), 2000);
             }
         }
 
-        // --- 5. LIGHTBOX POPUP GALLERY ---
+        // --- 7. CODE 100 REASONS GENERATOR ---
+        const reasonsContainer = document.getElementById('reasons-container');
+        for (let i = 1; i <= 100; i++) {
+            const chip = document.createElement('div');
+            chip.className = 'reason-chip';
+            chip.innerText = `${i}. You are my absolute favorite person in the entire world.`;
+            reasonsContainer.appendChild(chip);
+        }
+
+        // --- 8. OPEN WHEN ENVELOPES ---
+        const envelopeMessages = {
+            sad: "My sweet Gubbu, take a deep breath. Remember how much you mean to me. I wish I could wrap my arms around you right now and squeeze you tight.",
+            alone: "You are never truly alone, my love. Even when we are apart, my heart is right beside yours.",
+            miss: "I miss you like crazy too! Every second away from you feels long, but our next conversation will be so special.",
+            smile: "Here is your mandatory reminder to smile! Your smile lights up my entire existence."
+        };
+        function openEnvelope(type) {
+            document.getElementById('modal-text').innerText = envelopeMessages[type];
+            document.getElementById('envelope-modal').classList.remove('hidden');
+        }
+        function closeEnvelope() {
+            document.getElementById('envelope-modal').classList.add('hidden');
+        }
+
+        // --- 9. LIGHTBOX POPUP GALLERY ---
         const popup = document.getElementById('popup');
         const popupImg = document.getElementById('popupImg');
         const popupVideo = document.getElementById('popupVideo');
@@ -414,7 +609,6 @@
                 popupVideo.play().catch(()=>{});
             }
         }
-
         function closePopup() {
             popup.classList.remove('open');
             popupVideo.pause();
